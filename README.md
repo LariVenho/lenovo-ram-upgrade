@@ -1,11 +1,11 @@
 # Lenovo ThinkPad T490 – RAM Upgrade (8 GB → 16 GB)
 
-Hardware maintenance report: replacing the SO-DIMM memory module in a Lenovo ThinkPad T490.
+Hardware maintenance report: adding an 8 GB SO-DIMM memory module to a Lenovo ThinkPad T490, increasing total memory from 8 GB to 16 GB.
 
 | | |
 |---|---|
 | **Device** | Lenovo ThinkPad T490 (Machine Type 20N3) |
-| **Task** | Replace SO-DIMM memory module: 8 GB → 16 GB |
+| **Task** | Install an 8 GB SO-DIMM module in the free memory slot (8 GB → 16 GB total) |
 | **Date** | October 2026 |
 | **Performed by** | Lari Venho |
 | **Result** | ✅ Successful (one reseat required, see [Troubleshooting](#troubleshooting)) |
@@ -28,7 +28,7 @@ Hardware maintenance report: replacing the SO-DIMM memory module in a Lenovo Thi
 
 ## Objective
 
-Increase the system memory of the laptop to improve multitasking and make it better suited for running virtual machines and security tooling (homelab use).
+Increase the system memory of the laptop from 8 GB to 16 GB to improve multitasking and make it better suited for running virtual machines and other demanding tools. The T490 has 8 GB soldered to the motherboard and one free SO-DIMM slot, so the upgrade is done by adding a module to that slot. Using a module of the same size as the onboard memory also lets the memory run in dual-channel mode.
 
 ## Hardware
 
@@ -36,9 +36,10 @@ Increase the system memory of the laptop to improve multitasking and make it bet
 |---|---|
 | Laptop | Lenovo ThinkPad T490, Type 20N3-S9R000 |
 | Motherboard | Lenovo FT490/FT492/FT590/FP531, NM-B901 Rev 1.0 |
+| Onboard memory | 8 GB DDR4, soldered to the motherboard (not replaceable) |
 | Memory slot | 1 × DDR4 SO-DIMM slot, located under a black insulating film above the battery |
-| **Removed module** | SK hynix 8 GB, 1Rx8, PC4-2400T-SA1-11 (DDR4-2400), P/N HMA81GS6MFR8N-UH |
-| **Installed module** | 16 GB DDR4 SO-DIMM <!-- add brand / part number / speed here --> |
+| **Installed module** | 8 GB DDR4 SO-DIMM (SK hynix, PC4-2400 label visible in [photo 9](images/09-installed-module-8gb.jpg)) |
+| **Total memory** | Before: 8 GB → After: 16 GB |
 | Battery | Internal Li-ion, Lenovo L18L3P73 (11.55 V, 51 Wh) |
 
 ## Tools
@@ -61,8 +62,8 @@ Increase the system memory of the laptop to improve multitasking and make it bet
 2. **Remove the bottom cover.** Turn the laptop over on a soft surface. Loosen the Phillips screws on the bottom cover ([photo 3](images/03-bottom-cover.jpg)). The screws are *captive*: they stay attached to the cover and only need to be loosened, not removed ([photo 5](images/05-captive-screw-detail.jpg)).
 3. **Release the cover.** Gently lift the cover starting from the hinge side and work around the edges to release the clips ([photo 4](images/04-bottom-cover-removed.jpg)).
 4. **Locate the memory slot.** The SO-DIMM slot is above the battery, covered by a black insulating film. The machine type label is on this film ([photo 7](images/07-machine-type-label.jpg)).
-5. **Remove the old module.** Lift the film ([photo 8](images/08-old-module-under-shield.jpg)), push the metal retaining clips on both sides of the slot outwards. The module pops up to an angle of about 30°. Pull it out of the slot ([photo 9](images/09-old-module-skhynix-8gb.jpg)).
-6. **Install the new module.** Align the notch of the new 16 GB module with the key in the slot, insert it at an angle of about 30° **all the way in** until the gold contacts are no longer visible, then press it down until both clips lock.
+5. **Access the slot.** Lift the insulating film to expose the SO-DIMM slot ([photo 8](images/08-memory-slot-under-film.jpg)).
+6. **Install the module.** Align the notch of the 8 GB module with the key in the slot, insert it at an angle of about 30° **all the way in** until the gold contacts are no longer visible, then press it down until the metal clips on both sides lock ([photo 9](images/09-installed-module-8gb.jpg)).
 7. **Reassemble.** Put the insulating film back in place, refit the bottom cover, press the edges until the clips snap in and tighten the screws.
 8. **First boot.** Connect the charger (required if the internal battery was disabled) and power on.
 
@@ -70,7 +71,7 @@ Increase the system memory of the laptop to improve multitasking and make it bet
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| Black screen on first boot after the upgrade | Memory module was not fully seated in the slot | Opened the bottom cover again, removed the module and reinstalled it firmly until both clips locked. The second boot was successful. |
+| Black screen on first boot after the installation | Memory module was not fully seated in the slot | Opened the bottom cover again, removed the module and reinstalled it firmly until both clips locked. The second boot was successful. |
 
 > **Note:** After a memory change, ThinkPads may also show a black screen for a while during the first boot while the system performs memory training. If the screen stays black for a long time, check the module seating first.
 
@@ -92,7 +93,7 @@ After a successful boot, the installed memory can be checked in several ways:
   (Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB
   ```
 
-**Result:** The laptop boots normally and the new 16 GB module is in use.
+**Result:** The laptop boots normally and the total memory is 16 GB (8 GB onboard + 8 GB SO-DIMM).
 
 ## Lessons learned
 
@@ -108,5 +109,5 @@ After a successful boot, the installed memory can be checked in several ways:
 | ![Tools](images/01-tools-precision-screwdrivers.jpg)<br>**1.** Pro'sKit precision screwdrivers | ![Before](images/02-thinkpad-t490-before.jpg)<br>**2.** ThinkPad T490 before the upgrade |
 | ![Bottom cover](images/03-bottom-cover.jpg)<br>**3.** Bottom cover | ![Cover removed](images/04-bottom-cover-removed.jpg)<br>**4.** Bottom cover removed: motherboard, fan, battery and SSD |
 | ![Captive screw](images/05-captive-screw-detail.jpg)<br>**5.** Captive screw on the bottom cover | ![Peripherals](images/06-peripherals-disconnected.jpg)<br>**6.** USB devices disconnected |
-| ![Type label](images/07-machine-type-label.jpg)<br>**7.** Machine type label on the insulating film over the memory slot | ![Module under film](images/08-old-module-under-shield.jpg)<br>**8.** Old module under the insulating film |
-| ![Old module](images/09-old-module-skhynix-8gb.jpg)<br>**9.** Removed module: SK hynix 8 GB DDR4-2400 | |
+| ![Type label](images/07-machine-type-label.jpg)<br>**7.** Machine type label on the insulating film over the memory slot | ![Module under film](images/08-memory-slot-under-film.jpg)<br>**8.** Memory slot under the insulating film |
+| ![Installed module](images/09-installed-module-8gb.jpg)<br>**9.** Installed 8 GB DDR4 SO-DIMM module | |
